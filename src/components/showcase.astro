@@ -1,31 +1,86 @@
 ---
-import { getCollection } from "astro:content";
 import ContentSection from "~/components/content-section.astro";
-import ShowcaseCard from "~/components/showcase-card.astro";
 
-const featuredSites = await getCollection(
-  "showcase",
-  ({ data }) => "featured" in data,
-);
-const orderedSites = featuredSites.sort(
-  (a, b) => a.data.featured! - b.data.featured!,
-);
+const trabajosDestacados = [
+  {
+    titulo: "Caligrafía Clásica",
+    descripcion: "Proyectos de escritura tradicional con plumilla",
+    emoji: "🖋️",
+    color: "from-blue-400 to-blue-600",
+  },
+  {
+    titulo: "Brush Lettering",
+    descripcion: "Lettering moderno con pinceles y rotuladores",
+    emoji: "🖌️",
+    color: "from-pink-400 to-pink-600",
+  },
+  {
+    titulo: "Lettering Digital",
+    descripcion: "Creaciones digitales y diseño tipográfico",
+    emoji: "💻",
+    color: "from-purple-400 to-purple-600",
+  },
+  {
+    titulo: "Proyectos Decorativos",
+    descripcion: "Tarjetas, invitaciones y arte personalizado",
+    emoji: "🎨",
+    color: "from-green-400 to-green-600",
+  },
+  {
+    titulo: "Caligrafía Árabe",
+    descripcion: "Técnicas tradicionales de escritura árabe",
+    emoji: "✍️",
+    color: "from-amber-400 to-amber-600",
+  },
+  {
+    titulo: "Lettering 3D",
+    descripcion: "Efectos tridimensionales y sombras",
+    emoji: "🔤",
+    color: "from-indigo-400 to-indigo-600",
+  },
+];
 ---
 
-<ContentSection title="Showcase" id="showcase">
+<ContentSection title="Galería de Trabajos" id="showcase">
   <Fragment slot="lead">
-    Astro is <span class="text-primary">versatile</span>.{" "}
-    <span class="text-primary">Explore</span> what's possible and get{" "}
-    <span class="text-primary">inspired</span>.
+    Descubre la <span class="font-semibold text-pink-500">belleza</span> del lettering
+    a través de los trabajos de nuestros estudiantes. Cada pieza cuenta una historia
+    única llena de
+    <span class="font-semibold text-purple-500">creatividad</span> y <span
+      class="font-semibold text-pink-500">pasión</span
+    >.
   </Fragment>
-  <div class="max-w-6xl space-y-2">
-    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-      {orderedSites.map((site) => <ShowcaseCard site={site} />)}
+  <div class="max-w-6xl space-y-6">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {
+        trabajosDestacados.map((trabajo) => (
+          <div
+            class={`relative overflow-hidden rounded-xl bg-gradient-to-br shadow-lg ${trabajo.color} group cursor-pointer p-6 text-white transition-shadow hover:shadow-xl`}
+          >
+            <div class="absolute right-0 top-0 -translate-y-2 translate-x-4 rotate-12 transform opacity-20 text-6xl">
+              {trabajo.emoji}
+            </div>
+            <div class="relative z-10">
+              <div class="mb-4 transition-transform text-4xl group-hover:scale-110">
+                {trabajo.emoji}
+              </div>
+              <h3 class="mb-2 font-bold text-xl">{trabajo.titulo}</h3>
+              <p class="leading-relaxed text-white/90 text-sm">
+                {trabajo.descripcion}
+              </p>
+            </div>
+            <div class="absolute inset-0 bg-white/10 opacity-0 transition-opacity group-hover:opacity-100" />
+          </div>
+        ))
+      }
     </div>
-    <p class="text-right text-sm">
-      <a class="text-primary" href="https://astro.build/showcase/">
-        ...and more &rarr;
-      </a>
-    </p>
+    <div class="text-center">
+      <button
+        class="inline-flex items-center gap-2 rounded-full bg-pink-500 px-8 py-3 font-semibold text-white shadow-lg transition-colors hover:bg-pink-600"
+      >
+        <span>Ver Galería Completa</span>
+        <span>→</span>
+      </button>
+    </div>
   </div>
 </ContentSection>

@@ -1,0 +1,101 @@
+---
+import ContentSection from "~/components/content-section.astro";
+
+const cursos = [
+  {
+    titulo: "Caligrafía para Principiantes",
+    descripcion:
+      "Aprende los fundamentos de la caligrafía tradicional con plumilla y tinta.",
+    duracion: "4 semanas",
+    nivel: "Principiante",
+    precio: "$89",
+    incluye: ["Materiales básicos", "15 ejercicios guiados", "Certificado"],
+    emoji: "🖋️",
+    color: "from-blue-400 to-blue-600",
+  },
+  {
+    titulo: "Brush Lettering Moderno",
+    descripcion:
+      "Domina el arte del brush lettering con técnicas contemporáneas.",
+    duracion: "6 semanas",
+    nivel: "Intermedio",
+    precio: "$129",
+    incluye: ["Kit de pinceles", "Plantillas exclusivas", "Sesiones en vivo"],
+    emoji: "🖌️",
+    color: "from-pink-400 to-pink-600",
+  },
+  {
+    titulo: "Lettering Digital",
+    descripcion: "Crea lettering profesional usando herramientas digitales.",
+    duracion: "8 semanas",
+    nivel: "Avanzado",
+    precio: "$179",
+    incluye: ["Software incluido", "Biblioteca de recursos", "Proyecto final"],
+    emoji: "💻",
+    color: "from-purple-400 to-purple-600",
+  },
+];
+---
+
+<ContentSection title="Nuestros Cursos" id="cursos">
+  <Fragment slot="lead">
+    Diseñados para llevarte desde los <span class="font-semibold text-pink-500"
+      >primeros trazos</span
+    > hasta convertirte en un <span class="font-semibold text-purple-500"
+      >artista del lettering</span
+    >. Elige el curso perfecto para tu nivel.
+  </Fragment>
+  <div class="grid max-w-6xl gap-8 md:grid-cols-2 lg:grid-cols-3">
+    {
+      cursos.map((curso) => (
+        <div class="overflow-hidden rounded-xl border border-gray-100 bg-white shadow-lg transition-shadow hover:shadow-xl">
+          <div
+            class={`h-32 bg-gradient-to-br ${curso.color} flex items-center justify-center`}
+          >
+            <div class="text-white/90 text-6xl">{curso.emoji}</div>
+          </div>
+          <div class="p-6">
+            <div class="mb-3 flex items-center justify-between">
+              <span class="rounded-full bg-pink-100 px-3 py-1 font-medium text-pink-600 text-sm">
+                {curso.nivel}
+              </span>
+              <span class="text-gray-500 text-sm">{curso.duracion}</span>
+            </div>
+            <h3 class="mb-2 font-bold text-gray-800 text-xl">{curso.titulo}</h3>
+            <p class="mb-4 leading-relaxed text-gray-600 text-sm">
+              {curso.descripcion}
+            </p>
+
+            <div class="mb-4">
+              <h4 class="mb-2 font-semibold text-gray-700 text-sm">Incluye:</h4>
+              <ul class="space-y-1">
+                {curso.incluye.map((item) => (
+                  <li class="flex items-center text-gray-600 text-sm">
+                    <span class="mr-2 text-green-500">✓</span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            <div class="flex items-center justify-between border-t border-gray-100 pt-4">
+              <div class="font-bold text-gray-800 text-2xl">{curso.precio}</div>
+              <button class="rounded-lg bg-pink-500 px-6 py-2 font-semibold text-white transition-colors hover:bg-pink-600">
+                Inscribirme
+              </button>
+            </div>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+  <div class="mt-8 text-center">
+    <p class="mb-4 text-gray-600">¿No estás seguro cuál elegir?</p>
+    <button
+      class="inline-flex items-center gap-2 rounded-full border-2 border-purple-500 px-8 py-3 font-semibold text-purple-500 transition-colors hover:bg-purple-500 hover:text-white"
+    >
+      <span>📞</span>
+      <span>Agenda una Consulta Gratuita</span>
+    </button>
+  </div>
+</ContentSection>
