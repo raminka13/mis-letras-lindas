@@ -1,0 +1,81 @@
+---
+import ContentSection from "~/components/content-section.astro";
+
+const testimonios = [
+  {
+    nombre: "María González",
+    curso: "Caligrafía para Principiantes",
+    testimonio:
+      "Nunca pensé que podría escribir tan hermoso. Los cursos son muy claros y el apoyo de la instructora es increíble.",
+    calificacion: 5,
+    avatar: "👩🏻‍🦱",
+  },
+  {
+    nombre: "Carlos Rodríguez",
+    curso: "Brush Lettering Moderno",
+    testimonio:
+      "Mi pasión por el lettering comenzó aquí. Ahora creo invitaciones personalizadas para mis amigos y familia.",
+    calificacion: 5,
+    avatar: "👨🏽‍💻",
+  },
+  {
+    nombre: "Ana Martínez",
+    curso: "Lettering Digital",
+    testimonio:
+      "Los conocimientos que adquirí me permitieron comenzar mi propio negocio de diseño. ¡Eternamente agradecida!",
+    calificacion: 5,
+    avatar: "👩🏻‍🎨",
+  },
+];
+---
+
+<ContentSection title="Lo que dicen nuestros estudiantes" id="testimonios">
+  <Fragment slot="lead">
+    Miles de estudiantes ya han transformado su escritura en arte.
+    <span class="font-semibold text-pink-500">Únete a nuestra comunidad</span> y
+    descubre tu potencial creativo.
+  </Fragment>
+  <div class="grid max-w-6xl gap-8 md:grid-cols-2 lg:grid-cols-3">
+    {
+      testimonios.map((testimonio) => (
+        <div class="rounded-xl border border-pink-100 bg-white p-6 shadow-lg transition-shadow hover:shadow-xl">
+          <div class="mb-4 flex items-center">
+            <div class="mr-4 text-4xl">{testimonio.avatar}</div>
+            <div>
+              <h4 class="font-semibold text-gray-800">{testimonio.nombre}</h4>
+              <p class="text-gray-500 text-sm">{testimonio.curso}</p>
+            </div>
+          </div>
+
+          <div class="mb-4 flex">
+            {Array.from({ length: testimonio.calificacion }).map(() => (
+              <span class="text-yellow-400 text-lg">⭐</span>
+            ))}
+          </div>
+
+          <p class="italic leading-relaxed text-gray-600">
+            "{testimonio.testimonio}"
+          </p>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="mt-12 text-center">
+    <div
+      class="rounded-xl bg-gradient-to-r from-pink-500 to-purple-600 p-8 text-white"
+    >
+      <h3 class="mb-4 font-bold text-2xl">
+        ¿Listo para comenzar tu viaje creativo?
+      </h3>
+      <p class="mb-6 text-pink-100">
+        Únete a más de 1,000 estudiantes que ya están creando lettering hermoso
+      </p>
+      <button
+        class="rounded-full bg-white px-8 py-3 font-bold text-pink-600 shadow-lg transition-colors hover:bg-pink-50"
+      >
+        Comienza tu Curso Hoy
+      </button>
+    </div>
+  </div>
+</ContentSection>

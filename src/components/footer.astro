@@ -5,45 +5,93 @@ import type { FooterLink } from "~/types";
 
 const links: Array<FooterLink> = [
   {
-    url: "https://astro.build/",
-    description: "Astro's official website",
-    icon: "mdi:home",
+    url: "#contacto",
+    description: "Contáctanos",
+    icon: "mdi:email",
   },
   {
-    url: "https://github.com/mhyfritz/astro-landing-page",
-    description: "View source on GitHub",
-    icon: "fa-brands:github-alt",
+    url: "#",
+    description: "Síguenos en Instagram",
+    icon: "fa-brands:instagram",
   },
   {
-    url: "https://astro.build/chat",
-    description: "Astro on Discord",
-    icon: "fa-brands:discord",
+    url: "#",
+    description: "Únete a nuestro grupo de Facebook",
+    icon: "fa-brands:facebook",
   },
   {
-    url: "https://twitter.com/astrodotbuild",
-    description: "Astro on Twitter",
-    icon: "fa-brands:twitter",
+    url: "#",
+    description: "Suscríbete a nuestro canal de YouTube",
+    icon: "fa-brands:youtube",
   },
 ];
 ---
 
-<footer class="relative flex h-64 items-center justify-center">
-  <div class="absolute inset-0 overflow-hidden opacity-40">
-    <HeroImage />
-  </div>
-  <ul class="relative grid grid-cols-2 gap-4 sm:grid-cols-4">
-    {
-      links.map((link) => (
-        <li>
-          <a
-            class="flex size-16 items-center justify-center rounded-full border-2 border-current p-4"
-            href={link.url}
+<footer class="relative bg-gradient-to-br from-pink-50 to-purple-100 py-16">
+  <div class="container mx-auto px-8">
+    <div class="mb-12 text-center">
+      <div class="mb-4 flex items-center justify-center gap-3">
+        <div class="text-4xl">✍️</div>
+        <h2 class="font-bold text-gray-800 text-2xl">Mis Letras Lindas</h2>
+      </div>
+      <p class="mx-auto max-w-2xl text-gray-600">
+        Transformamos tu pasión por la escritura en arte. Únete a nuestra
+        comunidad de artistas del lettering y descubre todo tu potencial
+        creativo.
+      </p>
+    </div>
+
+    <div class="mb-12 grid gap-8 md:grid-cols-3">
+      <div class="text-center">
+        <h3 class="mb-4 font-semibold text-gray-800">Contacto</h3>
+        <p class="mb-2 text-gray-600 text-sm">📧 hola@misletraslindas.com</p>
+        <p class="text-gray-600 text-sm">📱 +1 (555) 123-4567</p>
+      </div>
+
+      <div class="text-center">
+        <h3 class="mb-4 font-semibold text-gray-800">Síguenos</h3>
+        <ul class="flex justify-center gap-4">
+          {
+            links.map((link) => (
+              <li>
+                <a
+                  class="flex size-10 items-center justify-center rounded-full border-2 border-pink-300 bg-white text-pink-500 transition-colors hover:border-pink-500 hover:bg-pink-50"
+                  href={link.url}
+                >
+                  <span class="sr-only">{link.description}</span>
+                  <Icon class="size-5" name={link.icon} />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <div class="text-center">
+        <h3 class="mb-4 font-semibold text-gray-800">Newsletter</h3>
+        <p class="mb-4 text-gray-600 text-sm">
+          Recibe tips y técnicas exclusivas
+        </p>
+        <div class="mx-auto flex max-w-xs gap-2">
+          <input
+            type="email"
+            placeholder="Tu email"
+            class="flex-1 rounded-lg border border-pink-300 px-3 py-2 text-sm focus:border-pink-500 focus:outline-none"
+          />
+          <button
+            class="rounded-lg bg-pink-500 px-4 py-2 font-semibold text-white transition-colors text-sm hover:bg-pink-600"
           >
-            <span class="sr-only">{link.description}</span>
-            <Icon class="size-full" name={link.icon} />
-          </a>
-        </li>
-      ))
-    }
-  </ul>
+            Suscribir
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="border-t border-pink-200 pt-8 text-center">
+      <p class="text-gray-500 text-sm">
+        © 2024 Mis Letras Lindas. Todos los derechos reservados. Hecho con ❤️
+        para los amantes del lettering.
+      </p>
+    </div>
+  </div>
 </footer>

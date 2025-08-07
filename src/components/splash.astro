@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import astronautImage from "~/assets/astronaut.png";
+import paoImage from "~/assets/Ilustracion_sin_titulo-112.avif";
 import HeroImage from "~/components/hero-image.astro";
 import Starfield from "~/components/starfield.astro";
 import GitHubCorner from "./github-corner.astro";
@@ -10,9 +11,9 @@ const widths = [450, 800];
 const sizes = "(min-width: 640px) 42vw, 67vw";
 ---
 
-<section class="relative h-full bg-black">
+<section class="relative h-full bg-rose-100">
   <Starfield />
-  <GitHubCorner />
+  <!-- <GitHubCorner /> -->
   <div id="splash-bg-fallback" class="absolute inset-0 hidden opacity-40">
     <HeroImage />
   </div>
@@ -20,13 +21,12 @@ const sizes = "(min-width: 640px) 42vw, 67vw";
     <h2
       class="flex flex-col items-center gap-2 self-end sm:gap-4 sm:self-auto sm:justify-self-end"
     >
-      <Icon name="logomark" class="size-20 text-white md:size-32" />
+      <!-- <Icon name="logomark" class="size-20 text-white md:size-32" /> -->
       <div
         class="gradient-text text-center font-extrabold tracking-tighter text-6xl md:text-8xl"
       >
-        Build fast
-        <br /> websites,
-        <br /> faster.
+        Aprende Lettering<br />
+        y Caligrafía rápido
       </div>
     </h2>
     <div
@@ -35,7 +35,7 @@ const sizes = "(min-width: 640px) 42vw, 67vw";
     >
       <Image
         class="h-full w-full object-cover"
-        src={astronautImage}
+        src={paoImage}
         widths={widths}
         sizes={sizes}
         loading="eager"
@@ -65,7 +65,7 @@ const sizes = "(min-width: 640px) 42vw, 67vw";
   }
 
   #astronaut {
-    animation: float linear 2.5s infinite alternate;
+    animation: float linear 7s infinite alternate;
   }
 
   @media (prefers-reduced-motion: reduce) {

@@ -1,19 +1,78 @@
-<div id="starfield" class="absolute inset-0">
-  <canvas id="starfield-canvas"></canvas>
+<div id="letterfield" class="absolute inset-0">
+  <canvas id="letterfield-canvas"></canvas>
 </div>
 
 <script>
   import invariant from "tiny-invariant";
 
-  const COUNT = 800;
-  const SPEED = 0.1;
+  const COUNT = 80;
+  const SPEED = 0.03;
 
-  class Star {
+  // Array de letras para mostrar
+  const LETTERS = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+    "N",
+    "O",
+    "P",
+    "Q",
+    "R",
+    "S",
+    "T",
+    "U",
+    "V",
+    "W",
+    "X",
+    "Y",
+    "Z",
+    "a",
+    "b",
+    "c",
+    "d",
+    "e",
+    "f",
+    "g",
+    "h",
+    "i",
+    "j",
+    "k",
+    "l",
+    "m",
+    "n",
+    "o",
+    "p",
+    "q",
+    "r",
+    "s",
+    "t",
+    "u",
+    "v",
+    "w",
+    "x",
+    "y",
+    "z",
+  ];
+
+  class Letter {
     x: number;
     y: number;
     z: number;
     xPrev: number;
     yPrev: number;
+    letter: string;
+    rotation: number;
+    rotationSpeed: number;
 
     constructor(x = 0, y = 0, z = 0) {
       this.x = x;
@@ -21,47 +80,73 @@
       this.z = z;
       this.xPrev = x;
       this.yPrev = y;
+      this.letter = LETTERS[Math.floor(Math.random() * LETTERS.length)];
+      this.rotation = Math.random() * Math.PI * 9;
+      this.rotationSpeed = (Math.random() - 0.5) * 0.005;
     }
 
     update(width: number, height: number, speed: number) {
       this.xPrev = this.x;
       this.yPrev = this.y;
-      this.z += speed * 0.0675;
-      this.x += this.x * (speed * 0.0225) * this.z;
-      this.y += this.y * (speed * 0.0225) * this.z;
+      this.z += speed * 0.1;
+      this.x += this.x * (speed * 0.05) * this.z;
+      this.y += this.y * (speed * 0.05) * this.z;
+      this.rotation += this.rotationSpeed;
+
       if (
         this.x > width / 2 ||
         this.x < -width / 2 ||
         this.y > height / 2 ||
-        this.y < -height / 2
+        this.y < -height / 2 ||
+        this.z > 5
       ) {
-        this.x = Math.random() * width - width / 2;
-        this.y = Math.random() * height - height / 2;
+        // Área emisora más grande - usar toda la pantalla para generar letras
+        this.x = (Math.random() - 0.5) * width * 1.2;
+        this.y = (Math.random() - 0.5) * height * 1.2;
         this.xPrev = this.x;
         this.yPrev = this.y;
-        this.z = 0;
+        this.z = 0.1;
+        this.letter = LETTERS[Math.floor(Math.random() * LETTERS.length)];
       }
     }
 
     draw(ctx: CanvasRenderingContext2D) {
-      ctx.lineWidth = this.z;
-      ctx.beginPath();
-      ctx.moveTo(this.x, this.y);
-      ctx.lineTo(this.xPrev, this.yPrev);
-      ctx.stroke();
+      const size = Math.max(16, this.z * 40 + 20);
+      const opacity = Math.min(0.8, Math.max(0.1, this.z * 3 + 0.2));
+
+      // Array de fuentes de caligrafía para variar
+      const fonts = [
+        '"Dancing Script"',
+        '"Great Vibes"',
+        '"Pacifico"',
+        '"Kaushan Script"',
+        '"Satisfy"',
+      ];
+      const randomFont =
+        fonts[Math.floor(this.letter.charCodeAt(0) % fonts.length)];
+
+      ctx.save();
+      ctx.translate(this.x, this.y);
+      ctx.rotate(this.rotation);
+      ctx.font = `${size}px ${randomFont}, cursive`;
+      ctx.textAlign = "center";
+      ctx.textBaseline = "middle";
+      ctx.fillStyle = `rgba(255,165,171, ${opacity})`;
+      ctx.fillText(this.letter, 0, 0);
+      ctx.restore();
     }
   }
 
-  const stars = Array.from({ length: COUNT }, () => new Star(0, 0, 0));
+  const letters = Array.from({ length: COUNT }, () => new Letter(0, 0, 0));
   let rafId = 0;
 
   const canvas = document.querySelector(
-    "#starfield-canvas",
+    "#letterfield-canvas"
   ) as HTMLCanvasElement;
   invariant(canvas, "canvas should not be null");
   const ctx = canvas.getContext("2d");
 
-  const container = document.querySelector("#starfield") as HTMLElement;
+  const container = document.querySelector("#letterfield") as HTMLElement;
   invariant(container, "container should not be null");
   const resizeObserver = new ResizeObserver(setup);
   resizeObserver.observe(container);
@@ -78,15 +163,14 @@
     canvas.style.height = `${height}px`;
     ctx.scale(dpr, dpr);
 
-    for (const star of stars) {
-      star.x = Math.random() * width - width / 2;
-      star.y = Math.random() * height - height / 2;
-      star.z = 0;
+    for (const letter of letters) {
+      // Área emisora inicial más grande - distribuir por toda la pantalla y más allá
+      letter.x = (Math.random() - 0.5) * width * 1.5;
+      letter.y = (Math.random() - 0.5) * height * 1.5;
+      letter.z = Math.random() * 0.5; // Empezar con algo de profundidad
     }
 
     ctx.translate(width / 2, height / 2);
-    ctx.fillStyle = "rgba(0, 0, 0, 0.4)";
-    ctx.strokeStyle = "white";
     rafId = requestAnimationFrame(frame);
   }
 
@@ -94,12 +178,14 @@
     invariant(ctx, "canvas context should not be null");
     const { clientWidth: width, clientHeight: height } = container;
 
-    for (const star of stars) {
-      star.update(width, height, SPEED);
-      star.draw(ctx);
+    // Limpiar completamente el canvas - sin efecto fantasma
+    ctx.clearRect(-width / 2, -height / 2, width, height);
+
+    for (const letter of letters) {
+      letter.update(width, height, SPEED);
+      letter.draw(ctx);
     }
 
-    ctx.fillRect(-width / 2, -height / 2, width, height);
     rafId = requestAnimationFrame(frame);
   }
 </script>
